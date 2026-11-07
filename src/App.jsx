@@ -482,6 +482,7 @@ function LeadForm({ initial, onClose, onSave }) {
             <Field label="Suburb *" value={f.suburb} onChange={v => set('suburb', v)} required />
             <Field label="State" value={f.state} onChange={v => set('state', v)} />
             <div className="col-span-2"><Field label="Street Address" value={f.address} onChange={v => set('address', v)} /></div>
+            </div>
           </div>
 
           <div className="border-t pt-4">
