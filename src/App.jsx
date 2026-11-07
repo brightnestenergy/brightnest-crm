@@ -160,9 +160,7 @@ export default function App() {
           <NavBtn active={view==='dashboard'} onClick={() => setView('dashboard')} icon={LayoutDashboard}>Dashboard</NavBtn>
           <NavBtn active={view==='pipeline'} onClick={() => setView('pipeline')} icon={Users}>Pipeline</NavBtn>
           <NavBtn active={view==='leads'} onClick={() => setView('leads')} icon={Users}>All Leads</NavBtn>
-          <NavBtn active={view==='leads'} onClick={() => setView('leads')} icon={Users}>All Leads</NavBtn>
           <NavBtn active={view==='followup'} onClick={() => setView('followup')} icon={AlertCircle}>Follow-ups</NavBtn>
-          <NavBtn active={view==='inventory'} onClick={() => setView('inventory')} icon={Package}>Inventory</NavBtn>
           <NavBtn active={view==='portal'} onClick={() => setView('portal')} icon={Home}>Customer Portal</NavBtn>
         </div>
       </header>
@@ -189,9 +187,8 @@ export default function App() {
 
         {view === 'dashboard' && <Dashboard stats={stats} leads={filtered} onSelect={setSelected} />}
         {view === 'pipeline' && <Pipeline leads={filtered} onUpdateStatus={updateStatus} onSelect={setSelected} />}
-        {view === 'leads' && <LeadTable leads={filtered} onSelect={setSelected} />}
-        {view === 'quotes' && <QuotesView leads={leads} onCreate={setShowQuote} />}
-        {view === 'inventory' && <InventoryView />}
+        {view === 'leads' && <LeadTable leads={filtered} onSelect={setSelected} onStatus={updateStatus} />}
+        {view === 'followup' && <FollowUpView leads={leads} onSelect={setSelected} />}
         {view === 'portal' && <CustomerPortal leads={leads} />}
       </main>
 
