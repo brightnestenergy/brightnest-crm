@@ -130,7 +130,7 @@ export default function App() {
     signed: leads.filter(l => l.signed_in_greensketch).length,
   }), [leads])
 
-  if (loading) return <div className="min-h-screen flex items-center justify-center text-slate-500">Loading CRM…</div>
+  if (loading) return <div className="min-h-screen flex items-center justify-center text-slate-500">Loading CRM‚Ä¶</div>
   if (!session) return <LoginScreen />
 
   return (
@@ -148,7 +148,7 @@ export default function App() {
           <div className="flex items-center gap-2">
             <button onClick={syncFromSheet} disabled={syncing} className="flex items-center gap-1.5 px-3 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium">
               <RefreshCw size={15} className={syncing ? 'animate-spin' : ''} />
-              {syncing ? 'Syncing…' : 'Sync Sheet'}
+              {syncing ? 'Syncing‚Ä¶' : 'Sync Sheet'}
             </button>
             <button onClick={() => { setForm({}); setShowForm(true) }} className="flex items-center gap-1.5 px-3 py-2 bg-white border rounded-lg text-sm font-medium">
               <Plus size={15} /> New Lead
@@ -172,7 +172,7 @@ export default function App() {
         <div className="bg-white rounded-xl p-3 shadow-sm mb-4 flex flex-wrap gap-2 items-center">
           <div className="relative flex-1 min-w-[200px]">
             <Search size={16} className="absolute left-3 top-2.5 text-slate-400" />
-            <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search name, phone, suburb, postcode…" className="w-full pl-9 pr-3 py-2 border rounded-lg text-sm" />
+            <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search name, phone, suburb, postcode‚Ä¶" className="w-full pl-9 pr-3 py-2 border rounded-lg text-sm" />
           </div>
           <select value={statusFilter} onChange={e => setStatusFilter(e.target.value)} className="border rounded-lg px-3 py-2 text-sm">
             <option value="">All Statuses</option>
@@ -230,7 +230,7 @@ function Dashboard({ stats, leads, onSelect }) {
               <div key={l.id} onClick={() => onSelect(l)} className="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 cursor-pointer border">
                 <div>
                   <div className="font-medium">{l.name}</div>
-                  <div className="text-xs text-slate-500">{l.suburb} · {l.postcode} · {l.created_at ? new Date(l.created_at).toLocaleDateString('en-AU') : ''} · {daysSince(l.created_at)} days old</div>
+                  <div className="text-xs text-slate-500">{l.suburb} ¬∑ {l.postcode} ¬∑ {l.created_at ? new Date(l.created_at).toLocaleDateString('en-AU') : ''} ¬∑ {daysSince(l.created_at)} days old</div>
                 </div>
                 <span className={`text-xs px-2 py-0.5 rounded ${PIPELINE.find(s => s.id === l.status)?.color || ''}`}>{l.status}</span>
               </div>
@@ -266,7 +266,7 @@ function Pipeline({ leads, onUpdateStatus, onSelect }) {
             {(byStatus[s.id] || []).map(l => (
               <div key={l.id} onClick={() => onSelect(l)} className="bg-white rounded-lg p-3 shadow-sm cursor-pointer hover:shadow">
                 <div className="font-medium text-sm">{l.name}</div>
-                <div className="text-xs text-slate-500 mt-0.5">{l.suburb} {l.postcode} · {l.created_at ? new Date(l.created_at).toLocaleDateString('en-AU') : ''}</div>
+                <div className="text-xs text-slate-500 mt-0.5">{l.suburb} {l.postcode} ¬∑ {l.created_at ? new Date(l.created_at).toLocaleDateString('en-AU') : ''}</div>
                 <div className="flex gap-1 mt-2">
                   {l.too_far && <span className="text-[10px] bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded">Too Far</span>}
                   {l.signed_in_greensketch && <span className="text-[10px] bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Signed</span>}
@@ -311,7 +311,7 @@ function LeadTable({ leads, onSelect }) {
                   {l.too_far && <span className="text-[10px] bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded mr-1">Too Far</span>}
                   {l.signed_in_greensketch && <span className="text-[10px] bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Signed</span>}
                 </td>
-                <td className="p-3 text-xs text-slate-500">{l.created_at ? new Date(l.created_at).toLocaleDateString('en-AU') : '—'}</td>
+                <td className="p-3 text-xs text-slate-500">{l.created_at ? new Date(l.created_at).toLocaleDateString('en-AU') : '‚Äî'}</td>
               </tr>
             ))}
           </tbody>
@@ -329,14 +329,14 @@ function LeadDrawer({ lead, onClose, onSave, onStatus, onQuote }) {
         <div className="p-5 border-b flex justify-between items-start sticky top-0 bg-white">
           <div>
             <h2 className="text-lg font-bold">{lead.name}</h2>
-            <p className="text-sm text-slate-500">{lead.suburb} {lead.postcode} · Created {lead.created_at ? new Date(lead.created_at).toLocaleDateString('en-AU') : '—'}</p>
+            <p className="text-sm text-slate-500">{lead.suburb} {lead.postcode} ¬∑ Created {lead.created_at ? new Date(lead.created_at).toLocaleDateString('en-AU') : '‚Äî'}</p>
           </div>
           <button onClick={onClose} className="text-2xl text-slate-400">&times;</button>
         </div>
         <div className="p-5 space-y-4">
           <div className="grid grid-cols-2 gap-3 text-sm">
-            <div><Phone size={14} className="inline mr-1" /> {lead.phone || '—'}</div>
-            <div><Mail size={14} className="inline mr-1" /> {lead.email || '—'}</div>
+            <div><Phone size={14} className="inline mr-1" /> {lead.phone || '‚Äî'}</div>
+            <div><Mail size={14} className="inline mr-1" /> {lead.email || '‚Äî'}</div>
             <div className="col-span-2"><MapPin size={14} className="inline mr-1" /> {lead.address}, {lead.suburb} {lead.postcode}</div>
           </div>
 
@@ -383,7 +383,7 @@ function LeadDrawer({ lead, onClose, onSave, onStatus, onQuote }) {
             <h4 className="font-medium text-sm mb-2">Property & Roof</h4>
             <div className="grid grid-cols-2 gap-3">
               <div><label className="text-xs font-medium">Roof Type</label><input value={edit.roof_type || ''} onChange={e => setEdit({...edit, roof_type: e.target.value})} placeholder="Tile / Metal / Flat" className="w-full border rounded px-2 py-1.5 mt-1 text-sm" /></div>
-              <div><label className="text-xs font-medium">Pitch</label><input value={edit.pitch || ''} onChange={e => setEdit({...edit, pitch: e.target.value})} placeholder="15° / 22° / Flat" className="w-full border rounded px-2 py-1.5 mt-1 text-sm" /></div>
+              <div><label className="text-xs font-medium">Pitch</label><input value={edit.pitch || ''} onChange={e => setEdit({...edit, pitch: e.target.value})} placeholder="15¬∞ / 22¬∞ / Flat" className="w-full border rounded px-2 py-1.5 mt-1 text-sm" /></div>
               <div><label className="text-xs font-medium">Orientation</label><input value={edit.orientation || ''} onChange={e => setEdit({...edit, orientation: e.target.value})} placeholder="North / NE / West" className="w-full border rounded px-2 py-1.5 mt-1 text-sm" /></div>
               <div><label className="text-xs font-medium">Shading</label><input value={edit.shading || ''} onChange={e => setEdit({...edit, shading: e.target.value})} placeholder="None / Low / Medium / High" className="w-full border rounded px-2 py-1.5 mt-1 text-sm" /></div>
               <div><label className="text-xs font-medium">Meter Phase</label>
@@ -437,7 +437,7 @@ function LeadDrawer({ lead, onClose, onSave, onStatus, onQuote }) {
           </div>
           <div>
             <label className="text-xs font-medium">GreenSketch URL</label>
-            <input value={edit.greensketch_url || ''} onChange={e => setEdit({...edit, greensketch_url: e.target.value})} placeholder="https://…" className="w-full border rounded px-2 py-1.5 mt-1 text-sm" />
+            <input value={edit.greensketch_url || ''} onChange={e => setEdit({...edit, greensketch_url: e.target.value})} placeholder="https://‚Ä¶" className="w-full border rounded px-2 py-1.5 mt-1 text-sm" />
           </div>
           <label className="flex items-center gap-2 text-sm">
             <input type="checkbox" checked={!!edit.signed_in_greensketch} onChange={e => setEdit({...edit, signed_in_greensketch: e.target.checked})} />
@@ -511,7 +511,7 @@ function QuotesView({ leads, onCreate }) {
             <div key={l.id} className="flex items-center justify-between p-3 border rounded-lg hover:bg-slate-50">
               <div>
                 <div className="font-medium">{l.name}</div>
-                <div className="text-xs text-slate-500">{l.suburb} · {l.postcode} · {l.status}</div>
+                <div className="text-xs text-slate-500">{l.suburb} ¬∑ {l.postcode} ¬∑ {l.status}</div>
               </div>
               <button onClick={() => onCreate(l)} className="px-3 py-1.5 bg-emerald-600 text-white text-sm rounded-lg">Create Quote</button>
             </div>
@@ -566,7 +566,7 @@ function QuoteGenerator({ lead, onClose }) {
             <div className="font-semibold">Prepared for</div>
             <div>{lead.name}</div>
             <div className="text-sm text-slate-600">{lead.address}, {lead.suburb} {lead.postcode} {lead.state}</div>
-            <div className="text-sm text-slate-600">{lead.phone} · {lead.email}</div>
+            <div className="text-sm text-slate-600">{lead.phone} ¬∑ {lead.email}</div>
           </div>
           <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
             <div><label className="font-medium">System Size (kW)</label><input value={q.systemKw} onChange={e => set('systemKw', e.target.value)} className="w-full border rounded px-2 py-1 mt-1" /></div>
@@ -580,7 +580,7 @@ function QuoteGenerator({ lead, onClose }) {
             <table className="w-full text-sm">
               <thead className="bg-slate-50"><tr><th className="text-left p-3">Item</th><th className="text-right p-3">Amount</th></tr></thead>
               <tbody>
-                <tr className="border-t"><td className="p-3">Panels & mounting ({q.panels} × {q.panelModel})</td><td className="p-3 text-right"><input type="number" value={q.panelCost} onChange={e => set('panelCost', e.target.value)} className="w-24 text-right border rounded px-1" /></td></tr>
+                <tr className="border-t"><td className="p-3">Panels & mounting ({q.panels} √ó {q.panelModel})</td><td className="p-3 text-right"><input type="number" value={q.panelCost} onChange={e => set('panelCost', e.target.value)} className="w-24 text-right border rounded px-1" /></td></tr>
                 <tr className="border-t"><td className="p-3">Inverter ({q.inverter})</td><td className="p-3 text-right"><input type="number" value={q.inverterCost} onChange={e => set('inverterCost', e.target.value)} className="w-24 text-right border rounded px-1" /></td></tr>
                 <tr className="border-t"><td className="p-3">Battery ({q.batteryKwh} kWh {q.batteryModel})</td><td className="p-3 text-right"><input type="number" value={q.batteryCost} onChange={e => set('batteryCost', e.target.value)} className="w-24 text-right border rounded px-1" /></td></tr>
                 <tr className="border-t"><td className="p-3">Installation & labour</td><td className="p-3 text-right"><input type="number" value={q.installCost} onChange={e => set('installCost', e.target.value)} className="w-24 text-right border rounded px-1" /></td></tr>
@@ -593,7 +593,7 @@ function QuoteGenerator({ lead, onClose }) {
             <label className="text-sm font-medium">Notes / Inclusions</label>
             <textarea value={q.notes} onChange={e => set('notes', e.target.value)} rows={3} placeholder="25-year panel warranty, 10-year inverter warranty, monitoring app, etc." className="w-full border rounded-lg px-3 py-2 mt-1 text-sm" />
           </div>
-          <div className="mt-6 text-xs text-slate-400 text-center">Valid for 14 days · Brightnest Energy · sales@brightnestenergy.net</div>
+          <div className="mt-6 text-xs text-slate-400 text-center">Valid for 14 days ¬∑ Brightnest Energy ¬∑ sales@brightnestenergy.net</div>
         </div>
       </div>
     </div>
@@ -687,7 +687,7 @@ function CustomerPortal({ leads }) {
                 <span className={`text-xs px-2 py-0.5 rounded ${PIPELINE.find(s => s.id === l.status)?.color || ''}`}>{l.status.replace(/_/g, ' ')}</span>
                 {l.signed_in_greensketch && <span className="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded">Signed</span>}
               </div>
-              <div className="mt-3 text-xs text-slate-400">System: {l.system_kw || '—'} kW · Battery: {l.battery_kwh || '—'} kWh</div>
+              <div className="mt-3 text-xs text-slate-400">System: {l.system_kw || '‚Äî'} kW ¬∑ Battery: {l.battery_kwh || '‚Äî'} kWh</div>
             </div>
           ))}
         </div>
@@ -711,7 +711,7 @@ function FollowUpView({ leads, onSelect }) {
               <div key={l.id} onClick={() => onSelect(l)} className="flex items-center justify-between p-3 rounded-lg hover:bg-amber-50 cursor-pointer border border-amber-100">
                 <div>
                   <div className="font-medium">{l.name}</div>
-                  <div className="text-xs text-slate-500">{l.suburb} · {l.postcode} · {l.phone} · Created {l.created_at ? new Date(l.created_at).toLocaleDateString('en-AU') : ''}</div>
+                  <div className="text-xs text-slate-500">{l.suburb} ¬∑ {l.postcode} ¬∑ {l.phone} ¬∑ Created {l.created_at ? new Date(l.created_at).toLocaleDateString('en-AU') : ''}</div>
                 </div>
                 <span className="text-xs bg-amber-100 text-amber-800 px-2 py-0.5 rounded">{daysSince(l.created_at)} days</span>
               </div>
@@ -727,7 +727,7 @@ function FollowUpView({ leads, onSelect }) {
               <div key={l.id} onClick={() => onSelect(l)} className="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 cursor-pointer border">
                 <div>
                   <div className="font-medium">{l.name}</div>
-                  <div className="text-xs text-slate-500">{l.suburb} · {l.phone} · {l.status}</div>
+                  <div className="text-xs text-slate-500">{l.suburb} ¬∑ {l.phone} ¬∑ {l.status}</div>
                 </div>
                 <span className="text-xs text-slate-500">{l.created_at ? new Date(l.created_at).toLocaleDateString('en-AU') : ''}</span>
               </div>
@@ -768,3 +768,4 @@ function LoginScreen() {
     </div>
   )
 }
+
