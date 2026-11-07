@@ -454,18 +454,27 @@ function LeadDrawer({ lead, onClose, onSave, onStatus, onQuote }) {
 function LeadForm({ initial, onClose, onSave }) {
   const [f, setF] = useState({
     name: '', phone: '', email: '', address: '', suburb: '', postcode: '', state: 'VIC',
-    bill: '', timeline: '', notes: '', status: 'new', ...initial
+    bill: '', timeline: '', notes: '', status: 'new',
+    has_existing_pv: '', existing_pv_size: '', has_existing_battery: '', existing_battery_kwh: '',
+    job_type: '', nmi: '', roof_type: '', pitch: '', orientation: '', shading: '',
+    meter_phase: '', existing_solar: '', switchboard: '', daily_usage: '', retailer: '',
+    interests: '', installer_company: '', ...initial
   })
   const set = (k, v) => setF(p => ({ ...p, [k]: v }))
   return (
     <div className="fixed inset-0 bg-black/40 z-40 flex items-center justify-center p-4" onClick={onClose}>
-      <div className="bg-white rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
-        <div className="p-5 border-b flex justify-between items-center sticky top-0 bg-white">
-          <h2 className="text-lg font-bold">New Lead</h2>
-          <button onClick={onClose} className="text-2xl text-slate-400">&times;</button>
+      <div className="bg-white rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl" onClick={e => e.stopPropagation()}>
+        <div className="p-5 border-b flex justify-between items-center sticky top-0 bg-white z-10">
+          <div>
+            <h2 className="text-lg font-bold text-slate-800">New Lead</h2>
+            <p className="text-xs text-slate-400">Capture contact, property and system details</p>
+          </div>
+          <button onClick={onClose} className="text-2xl text-slate-400 hover:text-slate-600">&times;</button>
         </div>
-        <div className="p-5 space-y-4">
-          <div className="grid grid-cols-2 gap-3">
+        <div className="p-5 space-y-5">
+          <div className="bg-slate-50 rounded-xl p-4">
+            <h3 className="text-sm font-semibold text-emerald-700 mb-3">Contact Details</h3>
+            <div className="grid grid-cols-2 gap-3">
             <Field label="First / Full Name *" value={f.name} onChange={v => set('name', v)} required />
             <Field label="Phone" value={f.phone} onChange={v => set('phone', v)} />
             <Field label="Email" value={f.email} onChange={v => set('email', v)} />
@@ -473,9 +482,74 @@ function LeadForm({ initial, onClose, onSave }) {
             <Field label="Suburb *" value={f.suburb} onChange={v => set('suburb', v)} required />
             <Field label="State" value={f.state} onChange={v => set('state', v)} />
             <div className="col-span-2"><Field label="Street Address" value={f.address} onChange={v => set('address', v)} /></div>
-            <Field label="Quarterly Bill" value={f.bill} onChange={v => set('bill', v)} />
-            <Field label="Timeline" value={f.timeline} onChange={v => set('timeline', v)} />
           </div>
+
+          <div className="border-t pt-4">
+            <h4 className="font-medium text-sm mb-2">Existing System</h4>
+            <div className="grid grid-cols-2 gap-3">
+              <div><label className="text-xs font-medium">Has Existing PV?</label>
+                <select value={f.has_existing_pv} onChange={e => set('has_existing_pv', e.target.value)} className="w-full border rounded px-2 py-1.5 mt-1 text-sm">
+                  <option value="">Select</option><option>No</option><option>Yes</option>
+                </select>
+              </div>
+              <Field label="Existing PV Size (kW)" value={f.existing_pv_size} onChange={v => set('existing_pv_size', v)} />
+              <div><label className="text-xs font-medium">Has Existing Battery?</label>
+                <select value={f.has_existing_battery} onChange={e => set('has_existing_battery', e.target.value)} className="w-full border rounded px-2 py-1.5 mt-1 text-sm">
+                  <option value="">Select</option><option>No</option><option>Yes</option>
+                </select>
+              </div>
+              <Field label="Existing Battery (kWh)" value={f.existing_battery_kwh} onChange={v => set('existing_battery_kwh', v)} />
+              <div className="col-span-2"><label className="text-xs font-medium">Job Type</label>
+                <select value={f.job_type} onChange={e => set('job_type', e.target.value)} className="w-full border rounded px-2 py-1.5 mt-1 text-sm">
+                  <option value="">Select</option>
+                  <option>New System</option>
+                  <option>Retrofit / Add Battery</option>
+                  <option>Expansion</option>
+                  <option>Replacement</option>
+                </select>
+              </div>
+              <div className="col-span-2"><Field label="NMI Number" value={f.nmi} onChange={v => set('nmi', v)} /></div>
+            </div>
+          </div>
+
+          <div className="border-t pt-4">
+            <h4 className="font-medium text-sm mb-2">Property & Roof</h4>
+            <div className="grid grid-cols-2 gap-3">
+              <Field label="Roof Type" value={f.roof_type} onChange={v => set('roof_type', v)} />
+              <Field label="Pitch" value={f.pitch} onChange={v => set('pitch', v)} />
+              <Field label="Orientation" value={f.orientation} onChange={v => set('orientation', v)} />
+              <Field label="Shading" value={f.shading} onChange={v => set('shading', v)} />
+              <div><label className="text-xs font-medium">Meter Phase</label>
+                <select value={f.meter_phase} onChange={e => set('meter_phase', e.target.value)} className="w-full border rounded px-2 py-1.5 mt-1 text-sm">
+                  <option value="">Select</option><option>Single Phase</option><option>Three Phase</option><option>Unknown</option>
+                </select>
+              </div>
+              <Field label="Switchboard" value={f.switchboard} onChange={v => set('switchboard', v)} />
+            </div>
+          </div>
+
+          <div className="border-t pt-4">
+            <h3 className="text-sm font-semibold text-emerald-700 mb-3">Energy & Interests</h3>
+            <div className="grid grid-cols-2 gap-3">
+              <Field label="Quarterly Bill" value={f.bill} onChange={v => set('bill', v)} />
+              <Field label="Daily Usage (kWh)" value={f.daily_usage} onChange={v => set('daily_usage', v)} />
+              <div className="col-span-2"><Field label="Current Retailer" value={f.retailer} onChange={v => set('retailer', v)} /></div>
+              <div className="col-span-2"><Field label="Installer Company" value={f.installer_company} onChange={v => set('installer_company', v)} /></div>
+            </div>
+            <div className="flex flex-wrap gap-3 text-sm mt-3">
+              {['Solar PV','Battery / BESS','EV Charger','Off-grid / Backup','Commercial'].map(opt => (
+                <label key={opt} className="flex items-center gap-1.5">
+                  <input type="checkbox" checked={(f.interests || '').includes(opt)} onChange={e => {
+                    const current = (f.interests || '').split(',').filter(Boolean)
+                    const next = e.target.checked ? [...current, opt] : current.filter(x => x !== opt)
+                    set('interests', next.join(','))
+                  }} />
+                  {opt}
+                </label>
+              ))}
+            </div>
+          </div>
+
           <div>
             <label className="text-xs font-medium text-slate-600">Notes</label>
             <textarea value={f.notes} onChange={e => set('notes', e.target.value)} rows={3} className="w-full border rounded-lg px-3 py-2 mt-1 text-sm" />
@@ -492,7 +566,7 @@ function Field({ label, value, onChange, required }) {
   return (
     <div>
       <label className="text-xs font-medium text-slate-600">{label}</label>
-      <input value={value || ''} onChange={e => onChange(e.target.value)} required={required} className="w-full border rounded-lg px-3 py-2 mt-1 text-sm" />
+      <input value={value || ''} onChange={e => onChange(e.target.value)} required={required} className="w-full border border-slate-200 rounded-lg px-3 py-2 mt-1 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none" />
     </div>
   )
 }
