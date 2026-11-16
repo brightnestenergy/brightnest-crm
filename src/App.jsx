@@ -5,6 +5,9 @@ import { LayoutDashboard, Users, Plus, LogOut, RefreshCw, Search, Filter, MapPin
 const PIPELINE = [
   { id: 'new', label: 'New', color: 'bg-blue-100 text-blue-800' },
   { id: 'contacted', label: 'Contacted', color: 'bg-amber-100 text-amber-800' },
+  { id: 'follow_up', label: 'Follow up', color: 'bg-orange-100 text-orange-800' },
+  { id: 'no_answer', label: 'No answer', color: 'bg-slate-100 text-slate-700' },
+  { id: 'call_back', label: 'Call Back', color: 'bg-yellow-100 text-yellow-800' },
   { id: 'qualified', label: 'Qualified', color: 'bg-indigo-100 text-indigo-800' },
   { id: 'site_inspection', label: 'Site Inspection', color: 'bg-purple-100 text-purple-800' },
   { id: 'proposal', label: 'Proposal', color: 'bg-teal-100 text-teal-800' },
@@ -454,7 +457,7 @@ function LeadDrawer({ lead, onClose, onSave, onStatus, onQuote }) {
 function LeadForm({ initial, onClose, onSave }) {
   const [f, setF] = useState({
     name: '', phone: '', email: '', address: '', suburb: '', postcode: '', state: 'VIC',
-    bill: '', timeline: '', notes: '', status: 'new',
+    bill: '', timeline: '', notes: '', status: 'new', campaign: '',
     has_existing_pv: '', existing_pv_size: '', has_existing_battery: '', existing_battery_kwh: '',
     job_type: '', nmi: '', roof_type: '', pitch: '', orientation: '', shading: '',
     meter_phase: '', existing_solar: '', switchboard: '', daily_usage: '', retailer: '',
@@ -482,6 +485,24 @@ function LeadForm({ initial, onClose, onSave }) {
             <Field label="Suburb *" value={f.suburb} onChange={v => set('suburb', v)} required />
             <Field label="State" value={f.state} onChange={v => set('state', v)} />
             <div className="col-span-2"><Field label="Street Address" value={f.address} onChange={v => set('address', v)} /></div>
+            <div className="col-span-2">
+              <label className="text-xs font-medium text-slate-600">Campaign / Source</label>
+              <select value={f.campaign || ''} onChange={e => set('campaign', e.target.value)} className="w-full border border-slate-200 rounded-lg px-3 py-2 mt-1 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none">
+                <option value="">Select</option>
+                <option>Chadstone store</option>
+                <option>Website</option>
+                <option>Anker lead</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div className="col-span-2">
+              <label className="text-xs font-medium text-slate-600">Status</label>
+              <select value={f.status || 'new'} onChange={e => set('status', e.target.value)} className="w-full border border-slate-200 rounded-lg px-3 py-2 mt-1 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none">
+                {PIPELINE.filter(s => ['new','contacted','follow_up','no_answer','call_back'].includes(s.id)).map(s => (
+                  <option key={s.id} value={s.id}>{s.label}</option>
+                ))}
+              </select>
+            </div>
             </div>
           </div>
 
